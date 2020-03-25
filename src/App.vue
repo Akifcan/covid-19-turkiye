@@ -16,7 +16,7 @@
     },
     data(){
       return{
-        forProtectedVirus: ['Ellerini En Az 20 Saniye Yıka', 'Kabalık Ortamlardan Uzak Dur', 'Dışarıya Çıktığın Zaman Yanında Antiseptik Bulundur', 'Ellerin kirliyken yüzüne götürme']
+        forProtectedVirus: ['Ellerini En Az 20 Saniye Sabunlu Su İle Yıka', 'Kabalık Ortamlardan Uzak Dur', 'Dışarıya Çıktığın Zaman Yanında Antiseptik Bulundur', 'Ellerin kirliyken yüzüne götürme']
       }
     },
     components: {Navbar, Footer},
@@ -24,7 +24,7 @@
 </script>
 
 <template>
-  <div>
+  <div @click='close()'>
     <Navbar />
     <router-view v-if='loaded' />
     <div class="loader" v-else><h1>{{ forProtectedVirus[Math.floor(Math.random() * forProtectedVirus.length)] }}</h1></div>
