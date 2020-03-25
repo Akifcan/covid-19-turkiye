@@ -80,5 +80,13 @@
   font-size: 2.5em;
 }
 
+@media(max-width: 900px){
+  .turkey-cases{
+    grid-template-columns: 1fr;
+  }
+  .total-case, .case-card{
+    margin-bottom: .5em;
+  }
+}
 
 </style>

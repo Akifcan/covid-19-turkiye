@@ -60,10 +60,13 @@
 	</section>
 </template>
 
+
 <style type="text/css">
 	.charts{
-		padding-top: var(--default-top);
 		display: grid;
 		grid-template-columns: 1fr 1fr;
+	}
+	@media(max-width: 900px){
+		.charts{grid-template-columns: 1fr}
 	}
 </style>

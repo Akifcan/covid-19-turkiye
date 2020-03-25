@@ -26,6 +26,7 @@
 
 <style type="text/css">
 .new-card{
+	padding: .9em;
 	height: auto;
 	border-radius: 20px;
 	border: 3px solid black;
@@ -47,10 +48,18 @@
 	flex-direction: column;
 	justify-content: space-between;
 }
-.new-card{
-	padding: .9em;
-}
 .new-card img{
 	height: 250px;
 }
+
+@media(max-width: 900px){
+	.new-card{
+		grid-template-columns: 1fr;
+	}
+	.new-card img{
+		width: 100%;
+		object-fit: contain;
+	}
+}
+
 </style>

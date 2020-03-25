@@ -40,6 +40,11 @@
 	text-align: center;
 }
 
+@media(max-width: 900px){
+	.world-stat{
+		margin-top: var(--default-top);
+	}
+}
 
 
 

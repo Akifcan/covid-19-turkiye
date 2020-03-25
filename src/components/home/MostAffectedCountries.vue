@@ -20,6 +20,16 @@
 
 <template>
 	<section class="most-affected-countries">
+		<div class="mobile-countries-card">
+			<h3>En Çok Etkilenen Ülkeler</h3>
+			<div class="mobile-card" v-for='country in countries'>
+				<h3>{{ countryNames[country.country_name] }}</h3>
+				<p>Toplam Vaka: <b>{{ country.cases }}</b></p>
+				<p>İyileşenler: <b>{{ country.total_recovered }}</b></p>
+				<p>Ölümler: <b>{{ country.deaths }}</b></p>
+				<p>Yeni Vakalar: <b>{{ country.new_cases }}</b></p>
+			</div>
+		</div>
 		<div class="countries-card" v-for='country in countries'>
 			<div>
 				<h3>{{ countryNames[country.country_name] }}</h3>
@@ -64,10 +74,28 @@
 	display: block;
 }
 
+.mobile-countries-card{
+	display: none;
+}
 
-@media screen and (max-width: 900px){
+@media(max-width: 900px){
+	.mobile-countries-card{
+		display: block;
+	}
 	.most-affected-countries{
-		grid-template-columns: 1fr 1fr;
+		display: block;
+	}
+	.countries-card{
+		display: none;
+	}
+	.mobile-countries-card h3{
+		margin-bottom: .9em;
+	}
+	.mobile-card{
+		border: 3px solid var(--primary-color);
+		padding: .5em;
+		margin-bottom: .5em;
 	}
 }
+
 </style>

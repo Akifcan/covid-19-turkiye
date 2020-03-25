@@ -2,7 +2,22 @@
   import Navbar from '@/components/Navbar'
   import Footer from '@/components/Footer'
   export default{
-    components: {Navbar, Footer}
+    components: {Navbar, Footer},
+    data(){
+      return{
+        isOpened: false
+      }
+    },
+    methods: {
+      openMenu(){
+        this.isOpened = !this.isOpened
+        this.isOpened ? 
+            this.$refs.menu.style.display = 'block'
+            : 
+            this.$refs.menu.style.display = 'none'
+
+      }
+    }
   }
 </script>
 
@@ -35,16 +50,6 @@
 main{
   width: 80%;
   margin: auto;
-}
-
-footer{
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  min-height: 10vh;
-  background-color: var(--primary-color);
 }
 
 </style>

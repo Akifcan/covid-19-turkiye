@@ -31,6 +31,7 @@
 
 <template>
   <div>
+    <div class="background"></div>
     <main>
       <TurkeyCases :cases='turkeyCases' />
       <Charts />
@@ -40,3 +41,19 @@
     
   </div>
 </template>
+
+<style type="text/css">
+  .background{
+    display: none;
+  }
+  @media(max-width: 900px){
+    .background{
+      position: absolute;
+      display: block;
+      background-color: #90A4AE;
+      height: 110vh;
+      width: 100%;
+      z-index: -1;
+    }
+  }
+</style>
