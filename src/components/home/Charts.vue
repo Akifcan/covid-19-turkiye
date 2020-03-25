@@ -63,6 +63,7 @@
 
 <style type="text/css">
 	.charts{
+		margin-top: var(--default-top);
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 	}

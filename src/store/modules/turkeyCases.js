@@ -1,10 +1,12 @@
 import axios from 'axios'
 
 const state={
-	cases: []
+	cases: [],
+	loaded: false
 }
 const getters={
-	cases: state => state.cases
+	cases: state => state.cases,
+	loaded: state => state.loaded
 }
 const mutations={
 	setCases(state, payload){
@@ -26,6 +28,7 @@ const actions={
 		})
 		.then(response => {
 			vuexContext.commit('setCases', response.data.latest_stat_by_country[0])
+			vuexContext.state.loaded = true
 		})
 	}
 }

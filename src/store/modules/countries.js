@@ -1,10 +1,12 @@
 import axios from 'axios'
 
 const state={
-	mostAffectedCountries: []
+	mostAffectedCountries: [],
+	loaded: false
 }
 const getters={
-	mostAffectedCountries: state => state.mostAffectedCountries
+	mostAffectedCountries: state => state.mostAffectedCountries,
+	loaded: state => state.loaded
 }
 const mutations={
 	setmostAffectedCountries(state, payload){
@@ -24,6 +26,7 @@ const actions={
 		})
 		.then(response => {
 			vuexContext.commit('setmostAffectedCountries', response.data.countries_stat.splice(0, 6))
+			vuexContext.state.loaded = true
 		})
 	}
 }

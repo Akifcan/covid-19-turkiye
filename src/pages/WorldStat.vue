@@ -3,9 +3,6 @@
 	import Today from '@/components/world-stat/Today'
 
 	export default{
-		created(){
-			this.$store.dispatch('worldStat/setTotalStat')
-		},
 		computed: {
 			totalStat(){
 				return this.$store.getters['worldStat/all']

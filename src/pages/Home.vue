@@ -7,11 +7,6 @@
 
 
   export default{
-    created(){
-      this.$store.dispatch('turkeyCases/getTurkeyCases')
-      this.$store.dispatch('news/getLastNews')
-      this.$store.dispatch('countries/getMostAffectedCountries')
-    },
     computed: {
       turkeyCases(){
         return this.$store.getters['turkeyCases/cases']
@@ -21,7 +16,7 @@
       },
       mostAffectedCountries(){
         return this.$store.getters['countries/mostAffectedCountries']
-      }
+      },
     },
     components: {
       Navbar, TurkeyCases, LastNews, MostAffectedCountries, Charts
@@ -43,17 +38,17 @@
 </template>
 
 <style type="text/css">
+.background{
+  display: none;
+}
+@media(max-width: 900px){
   .background{
-    display: none;
+    position: absolute;
+    display: block;
+    background-color: #90A4AE;
+    height: 110vh;
+    width: 100%;
+    z-index: -1;
   }
-  @media(max-width: 900px){
-    .background{
-      position: absolute;
-      display: block;
-      background-color: #90A4AE;
-      height: 110vh;
-      width: 100%;
-      z-index: -1;
-    }
-  }
+}
 </style>

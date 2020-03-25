@@ -3,10 +3,12 @@ import axios from 'axios'
 const state={
 	all: [],
 	today: [],
+	loaded: false
 }
 const getters={
 	all: state => state.all,
-	today: state => state.today
+	today: state => state.today,
+	loaded: state => state.loaded
 }
 const mutations={
 	setAll(state, payload){
@@ -38,6 +40,7 @@ const actions={
 				newDeaths: response.data.new_deaths,
 				lastUpdate: response.data.statistic_taken_at
 			})
+			vuexContext.state.loaded = true
 		})
 	}
 }

@@ -4,9 +4,6 @@
 		components: {
 			NewCard,
 		},
-		created(){
-			this.$store.dispatch('news/getAllNews')
-		},
 		computed: {
 			allNews(){
 				return this.$store.getters['news/allNews']

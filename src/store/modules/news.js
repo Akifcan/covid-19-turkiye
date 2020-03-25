@@ -2,11 +2,13 @@ import axios from 'axios'
 
 const state={
 	lastNews: [],
-	allNews: []
+	allNews: [],
+	loaded: false
 }
 const getters={
 	lastNews: state => state.lastNews,
-	allNews: state => state.allNews
+	allNews: state => state.allNews,
+	loaded: state => state.loaded
 }
 const mutations={
 	setLastNews(state, payload){
@@ -45,6 +47,7 @@ const actions={
 		})
 		.then(response => {
 			vuexContext.commit('setAllNews', response.data.result)
+			vuexContext.state.loaded = true
 		})
 	}
 }
