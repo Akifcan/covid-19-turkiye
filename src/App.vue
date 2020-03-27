@@ -1,7 +1,9 @@
 <script type="text/javascript">
   import Navbar from '@/components/Navbar'
   import Footer from '@/components/Footer'
+  import { forProtectedVirus } from '@/mixins/forProtectedVirus'
   export default{
+    mixins: [forProtectedVirus],
     created(){
       this.$store.dispatch('turkeyCases/getTurkeyCases')
       this.$store.dispatch('news/getLastNews')
@@ -14,17 +16,19 @@
         return this.$store.getters['turkeyCases/loaded'] && this.$store.getters['news/loaded'] && this.$store.getters['worldStat/loaded'] && this.$store.getters['countries/loaded']
       }
     },
-    data(){
-      return{
-        forProtectedVirus: ['Ellerini En Az 20 Saniye Sabunlu Su İle Yıka', 'Kabalık Ortamlardan Uzak Dur', 'Dışarıya Çıktığın Zaman Yanında Antiseptik Bulundur', 'Ellerin kirliyken yüzüne götürme']
-      }
-    },
     components: {Navbar, Footer},
+    watch: {
+      $route(to, from){
+        if(to.name == 'home' || to.name == 'countries'){
+          this.$store.dispatch('countries/getMostAffectedCountries')
+        }
+      }
+    }
   }
 </script>
 
 <template>
-  <div @click='close()'>
+  <div>
     <Navbar />
     <router-view v-if='loaded' />
     <div class="loader" v-else><h1>{{ forProtectedVirus[Math.floor(Math.random() * forProtectedVirus.length)] }}</h1></div>

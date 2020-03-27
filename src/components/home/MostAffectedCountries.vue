@@ -1,20 +1,10 @@
 <script type="text/javascript">
+	import { countryNames } from '@/mixins/countryNames'
 	export default{
+		mixins: [countryNames],
 		props: {
 			countries: {required: true}
 		},
-		data(){
-			return{
-				countryNames: {
-					'China': 'Çin',
-					'USA': 'ABD',
-					'Spain': 'İspanya',
-					'Germany': 'Almanya',
-					'Italy': 'İtalya',
-					'Iran': 'İran'
-				}
-			}
-		}
 	}
 </script>
 
@@ -32,7 +22,7 @@
 		</div>
 		<div class="countries-card" v-for='country in countries'>
 			<div>
-				<h3>{{ countryNames[country.country_name] }}</h3>
+				<h3>{{ countryNames[country.country_name] }} </h3>
 				<p>Toplam Vaka: {{ country.cases }}</p>
 			</div>
 			<ul>

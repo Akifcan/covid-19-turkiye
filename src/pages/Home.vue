@@ -15,7 +15,7 @@
         return this.$store.getters['news/lastNews']
       },
       mostAffectedCountries(){
-        return this.$store.getters['countries/mostAffectedCountries']
+        return this.$store.getters['countries/mostAffectedCountries'].splice(0, 6)
       },
     },
     components: {

@@ -19,6 +19,15 @@ export default new Router({
       path: '/haberler',
       component: () => import('@/pages/News'),
       name: 'news'
+    },
+    {
+      path: '/ulkeler',
+      component: () => import('@/pages/Countries'),
+      name: 'countries'
+    },
+    {
+      path: '*',
+      redirect: {name: 'home'}
     }
   ],
   'mode': 'history'
