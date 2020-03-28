@@ -99,6 +99,8 @@
 	background-color: var(--card-color);
 	width: 30%;
 	height: 40px;
+	border: 2px solid var(--primary-color);
+	outline: none;
 	border-radius: 1em;
 	color: white;
 	text-align: center;
@@ -120,6 +122,9 @@ hr{
 @media(max-width: 900px){
 	.compare-feed, .redirect-compare-page{
 		width: 40%;
+	}
+	.redirect-compare-page button{
+		width: 50%;
 	}
 }
 </style>
