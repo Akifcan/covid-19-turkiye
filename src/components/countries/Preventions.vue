@@ -70,6 +70,7 @@ input{
 		font-size: 1em;
 		text-indent: 10px;
 		margin-bottom: .9em;
+		z-index: -1;
 	}
 	.prevensions{
 		padding: 0.5em;
