@@ -3,12 +3,16 @@ import axios from 'axios'
 const state={
 	mostAffectedCountries: [],
 	countryStat: null,
-	loaded: false
+	loaded: false,
+	compare: null,
+	compareWith: null
 }
 const getters={
 	mostAffectedCountries: state => state.mostAffectedCountries,
 	loaded: state => state.loaded,
 	countryStat: state => state.countryStat,
+	compare: state => state.compare,
+	compareWith: state => state.compareWith
 }
 const mutations={
 	setmostAffectedCountries(state, payload){
@@ -17,6 +21,12 @@ const mutations={
 	setCountryStat(state, payload){
 		state.countryStat = payload
 	},
+	addCompare(state, payload){
+		state.compare = payload
+	},
+	addCompareWith(state, payload){
+		state.compareWith = payload
+	}
 }
 const actions={
 	getMostAffectedCountries(vuexContext){
@@ -50,6 +60,9 @@ const actions={
 			vuexContext.commit('setCountryStat', response.data.latest_stat_by_country[0])
 		})
 	},
+	removeStat(vuexContext){
+		vuexContext.state.countryStat = null
+	}
 }
 
 export default{

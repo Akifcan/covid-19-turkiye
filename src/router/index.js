@@ -26,9 +26,22 @@ export default new Router({
       name: 'countries'
     },
     {
+      path: '/karsilastir',
+      component: () => import('@/pages/Compare'),
+      name: 'compare'
+    },
+    {
       path: '*',
       redirect: {name: 'home'}
     }
   ],
   'mode': 'history'
 })
+
+
+
+
+
+
+
+

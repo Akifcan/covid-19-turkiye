@@ -9,37 +9,16 @@
 			country: {required: true}
 		},
 		created(){
-			axios({
-				"method":"GET",
-				"url":"https://coronavirus-monitor.p.rapidapi.com/coronavirus/cases_by_particular_country.php",
-				"headers":{
-					"content-type":"application/octet-stream",
-					"x-rapidapi-host":"coronavirus-monitor.p.rapidapi.com",
-					"x-rapidapi-key":"8481f0db26mshee467481fa9fd60p17e613jsnf1d8f3e9a61c"
-				},"params":{
-					"country": this.country.country_name
-				}
-			})
-			.then((response)=>{
-				let stats = []
-				let i = 0
-				response.data.stat_by_country.forEach(stat => stats.push(stat.total_cases))
-				Array.from(new Set(stats)).slice(-5).forEach(stat => {
-					i++
-					this.options.xaxis.categories.push(`${i}`)
-					this.series[0].data.push(stat.split(',').join(''))
-					this.loaded = true
-				})			})			
-
+			this.getCountryChart()
 		},
 		components: {
 			VueApexCharts
 		},
-		watch: {
-			country(val){
+		methods: {
+			getCountryChart(){
 				this.loaded = false
-				this.series[0].data = []
 				this.options.xaxis.categories = []
+				this.series[0].data = []
 				axios({
 					"method":"GET",
 					"url":"https://coronavirus-monitor.p.rapidapi.com/coronavirus/cases_by_particular_country.php",
@@ -48,20 +27,34 @@
 						"x-rapidapi-host":"coronavirus-monitor.p.rapidapi.com",
 						"x-rapidapi-key":"8481f0db26mshee467481fa9fd60p17e613jsnf1d8f3e9a61c"
 					},"params":{
-						"country": this.country.country_name
+						"country":this.country.country_name
 					}
 				})
-				.then((response)=>{
+				.then(response => {
 					let stats = []
-					let i = 0
 					response.data.stat_by_country.forEach(stat => stats.push(stat.total_cases))
-					console.dir(Array.from(new Set(stats)))
+
 					Array.from(new Set(stats)).slice(-5).forEach(stat => {
-						i++
-						this.options.xaxis.categories.push(`${i}`)
-						this.series[0].data.push(stat.split(',').join(''))
-						this.loaded = true
-					})			})			
+						this.options.xaxis.categories.push(`${stat} vaka`)
+						this.series[0].data.push(stat)
+					})
+
+					let totalRecovered = this.country.total_recovered.split(',').join('')
+					let totalDeaths = this.country.total_deaths.split(',').join('')
+
+					this.pieOptions.labels.push('İyileşenler', 'Ölümler')
+					this.pieSeries.push(parseInt(totalRecovered), parseInt(totalDeaths))
+					this.loaded = true
+
+
+				})
+
+			},
+			addToCompare(){
+				this.$emit('compare', this.country.country_name)
+			},
+			back(){
+				this.$store.dispatch('countries/removeStat')
 			}
 		},
 		data(){
@@ -82,19 +75,33 @@
 					name: 'series-1',
 					data: []
 				}],
-				pieSeries: [44, 55, 41, 17, 15],
+				pieSeries: [],
 				pieOptions: {
-					labels: ['Apple', 'Mango', 'Orange', 'Watermelon']
+					labels: []
 				}
 			}
 		},	
+		computed: {
+			compare(){
+				return this.$store.getters['countries/compare']
+			}
+		},
+		watch: {
+			country(val){
+				this.getCountryChart()
+			}
+		}
 	}
 </script>
 
 <template>
 	<div class="country-stat">
+		<div class="fab" @click='back()'><p>Geri</p></div>
 		<div class="country">
-			<h1>{{ countryNames[country.country_name] }}</h1>
+			<div class="country-name">
+				<h1>{{ countryNames[country.country_name] }}</h1>
+				<button @click='addToCompare()' :disabled='compare == country.country_name'>Karşılaştır</button>
+			</div>
 			<hr>
 			<p>Toplam Vaka: <b>{{ country.total_cases }}</b></p>
 			<p>İyileşenler: <b>{{ country.total_recovered }}</b></p>
@@ -103,10 +110,10 @@
 			<p>Kritik Durumda Olan Hastalar  <b>{{ country.serious_critical }}</b> </p>
 			<p>Aktif Vakalar <b>{{ country.active_cases }}</b> </p>
 			<p>Bugün Bildirilen Ölümler <b>{{ country.new_deaths != '' ? country.new_deaths : 'Bugün Bildirilmedi'  }}</b> </p>
-			<div class="country-charts" v-if='loaded'>
-				<VueApexCharts :height='200' :options='options' :series='series' type='bar' />
-				<VueApexCharts :height='200' :options='options' :series='series' type='line' />
-				<VueApexCharts :height='200' :options='pieOptions' :series='pieSeries' type='pie' />
+			<div class="country-charts">
+				<VueApexCharts :height='200' :options='options' :series='series' type='bar' v-if='loaded'/>
+				<VueApexCharts :height='200' :options='options' :series='series' type='line' v-if='loaded'/>
+				<VueApexCharts :height='200' :options='pieOptions' :series='pieSeries' type='pie' v-if='loaded'  />
 			</div>
 
 		</div>
@@ -114,6 +121,9 @@
 </template>
 
 <style type="text/css">
+.fab{
+	display: none;
+}
 .country-stat{
 	overflow-x: scroll;
 	padding-top: var(--default-top);
@@ -131,6 +141,48 @@
 	height: 40vh;
 	align-items: center;
 	grid-template-columns: 1fr;
+}
+
+.country-name{
+	display: flex;
+	justify-content: space-between;
+}
+
+.country-name button{
+	background-color: var(--card-color);
+	padding: .9em;
+	border: none;
+	color: white;
+	border-radius: .9em;
+	font-size: 1em;
+	cursor: pointer;
+}
+
+.country-name button:disabled{
+	opacity: .5;
+}
+
+@media(max-width: 900px){
+	.fab{
+		color: white;
+		text-align: center;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		z-index: 1;
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		margin: .9em;
+		display: block;
+		height: 70px;
+		width: 20%;
+		background-color: var(--primary-color);
+		border-radius: 3em;
+	}
+	.fab p{
+		padding-top: 25px;
+	}
 }
 
 </style>

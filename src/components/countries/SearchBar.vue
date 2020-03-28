@@ -84,6 +84,12 @@
 .search-bar h1{
 	font-size: 2em;
 }
+
+@media(max-width: 900px){
+	.search-bar{
+		display: none;
+	}
+}
 </style>
 
 
