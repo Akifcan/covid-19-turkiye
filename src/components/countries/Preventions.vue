@@ -61,7 +61,7 @@
 	font-size: 1.5em;
 }
 @media(max-width: 900px){
-	input{
+	.prevensions-input input{
 		display: block;
 		width: 100%;
 		outline: none;
