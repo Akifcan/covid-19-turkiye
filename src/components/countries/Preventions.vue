@@ -8,7 +8,7 @@
 
 <template>
 	<div class="prevensions">
-		<input type="text" placeholder="Ülke (eg: Turkey)" v-model='countryName' @keyup.enter='searchCountry()' />
+		<input type="text" class="prevensions-input" placeholder="Ülke (eg: Turkey)" v-model='countryName' @keyup.enter='searchCountry()' />
 		<div class="images">
 			<img 
 			:src="require('@/assets/antibacterial.png')" 
@@ -42,7 +42,7 @@
 </template>
 
 <style type="text/css">
-input{
+.prevensions-input input{
 	display: none;
 }
 .prevensions{
